@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup Now !!</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        $(function () {
+            $('#submitButton').on('click', function (e) {
+                fetch(`/account`)
+                    .then(function (response) {
+                        return response.text();
+                    }).then(function (text) {
+                    console.log('response text:');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<hr>
+    <div class="content" align="center">
+        <h1> Signup Now !!</h1>
+    <form method="post">
+        <p>
+            <b><label> First Name :
+                <input type="text" name="firstname" placeholder="First Name"/>
+            </label>
+        </p>
+        <p>
+            <b><label> Last Name :
+                <input type="text" name="lastname" placeholder="Last Name"/>
+                </label>
+        </p>
+        <p>
+            <b><label> Email
+                <input type="text" name="email" placeholder="E-mail"/>
+                </label>
+        </p>
+        <p>
+            <b><label> Address
+                <input type="text" name="address" placeholder="Address"/>
+                </label>
+        </p>
+        <p>
+            <b><label> Password
+                <input type="text" name="password" placeholder="Password"/>
+                </label>
+        </p>
+        <p>
+            <b><label> Conirm Password
+                <input type="text" name="confpassword" placeholder="Confirm Password"/>
+                </label>
+        </p>
+<!--        <p>-->
+<!--            <h3>Secret Questions</h3>-->
+<!--        </p>-->
+        <p>
+        <h3>Secret Question 1</h3>
+            <b><label> What is your favourite sport :
+                <input type="text" name="sq1" placeholder="Secret Question 1"/>
+                </label>
+        </p>
+
+        <p>
+            <h3>Secret Question 2</h3>
+            <b><label> What is your birth place :
+                <input type="text" name="sq2" placeholder="Secret Question 2"/>
+                </label>
+        </p>
+
+        <p>
+            <h3>Secret Question 3</h3>
+            <b><label> What is your mother maiden name :
+                <input type="text" name="sq3" placeholder="Secret Question 3"/>
+                </label>
+        </p>
+        <button type="submit" id="submitButton">Submit</button>
+    </form>
+            <hr>
+
+    </div>
+</body>
+</html>
