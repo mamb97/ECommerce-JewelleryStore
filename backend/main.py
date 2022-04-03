@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 import os
 from product import product_api
 from contact import contact_api
@@ -18,7 +18,7 @@ def create_app():
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve(path):
-        return render_template('product.html')
+        return redirect(url_for("product_api.product_list"))
 
     return app
 

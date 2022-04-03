@@ -4,14 +4,26 @@
     <title>Product</title>
 
     <script src="../static/js/header.js" type="text/javascript" defer></script>
-
+    <script>
+        async function buynow() {
+            const confirmationtext = this.document.getElementById("confirmationText")
+            const buynow_button = this.document.getElementById("buy_now")
+            const product_id = this.document.getElementById("product_id").innerText
+            buynow_button.disabled = true;
+            // fetch(`/product/purchase/${product_id}`)
+            confirmationtext.innerHTML = '<p style="color: blue">Order has been placed successfully! Continue shopping...</p>'
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
+            await sleep(1000)
+            window.location.href = "../product.html"
+        }
+    </script>
 </head>
 <body>
 <p id="header-component">Hello</p>
 <div class="display">
     <div>
         <table>
-            <th>
+            <th text-align="center">
                 {{product.product_name}}
             </th>
             <tr>
@@ -19,7 +31,8 @@
                     <table>
                         <tr>
                             <td>
-                                <div id="product_image">{{product.product_image}}</div>
+                                <p id="product_id" hidden> {{product.product_id}}</p>
+                                <img id="product_image" src="{{product.product_image}}" width="350" height="350"/>
                             </td>
                         </tr>
                     </table>
@@ -39,7 +52,9 @@
                         <tr>
                             <td>
                                 <div>
-                                    <button id="buy_now">Buy Now</button>
+                                    <button id="buy_now"
+                                            onclick=buynow()>Buy Now</button>
+                                    <p id="confirmationText"></p>
                                 </div>
                             </td>
                         </tr>

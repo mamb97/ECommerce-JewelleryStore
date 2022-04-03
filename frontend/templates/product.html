@@ -14,12 +14,10 @@
             {% for product in data %}
             <div class="flex-grow-0">
                 <div class="card-body">
-                    <p hidden id="product_id">{{product.product_id}}</p>
-                    <img src="{{product.product_image}}" width="250" height="250"
-                         onclick="fetch(`/product/` + document.getElementById('product_id').innerHTML)"/>
+                    <img src="{{product.product_image}}" width="250" height="250"/>
                     <p>Name {{product.product_name}}</p>
                     <p>Price {{ product.product_price}}</p>
-
+                    <a href="{{url_for('product_api.product_description', product_id=product.product_id)}}">More details</a>
                 </div>
             </div>
             {% endfor %}
