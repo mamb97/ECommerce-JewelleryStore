@@ -1,4 +1,3 @@
-
 from flask import render_template, request, Blueprint, redirect, url_for
 
 from database import get_db
@@ -21,20 +20,15 @@ def signup():
         city = input_body.get('city', '').strip().lower()
         state = input_body.get('state', '').strip().lower()
         country = input_body.get('country', '').strip().lower()
+        # zipcode = input_body.get('zipcode', '').strip
         password = input_body.get('password', '').strip()
         confpassword = input_body.get('confpassword', '').strip()
         sq1 = input_body.get('sq1', '').strip().lower()
         sq2 = input_body.get('sq2', '').strip().lower()
         sq3 = input_body.get('sq3', '').strip().lower()
 
-        if not (input_body.get('firstname', '') and input_body.get('lastname', '') and input_body.get('email',
-                                                                                                      '') and input_body.get(
-            'address', '') and input_body.get('city', '') and input_body.get('state', '') and input_body.get('country',
-                                                                                                             '') and input_body.get(
-            'password', '') and input_body.get('confpassword',
-                                               '') and input_body.get('sq1',
-                                                                      '') and input_body.get(
-            'sq2', '') and input_body.get('sq3', '')):
+        if not (
+                firstname and lastname and email and address and city and state and country and password and confpassword and sq1 and sq2 and sq3):
             return "Mandatory fields are missing"
 
         if password != confpassword:
@@ -48,9 +42,11 @@ def signup():
 
         # if input_body.get(state, '') == 'state':
         #     return "Please select a state from dopdown"
-        # Todo: Add state country and city
-        account_db.insert_one({'firstname': firstname, 'lastname': lastname, 'email': email, 'address': address,
-                               'password': password, 'sq1': sq1, 'sq2': sq2, 'sq3': sq3})
+        # Todo: Add zipcode
+        account_db.insert_one(
+            {'firstname': firstname, 'lastname': lastname, 'email': email, 'address': address, 'city': city,
+             'state': state, 'country': country,
+             'password': password, 'sq1': sq1, 'sq2': sq2, 'sq3': sq3})
 
         return 'Executed insert account details to db - signup fields'
 
@@ -113,7 +109,7 @@ def login():
 
         # Todo - session creation is pending
 
-        auth =  account_db.find_one({'email': email})
+        auth = account_db.find_one({'email': email})
         if auth['email'] == email and auth['password'] == password:
             return redirect(url_for("product_api.product_list"))
 
