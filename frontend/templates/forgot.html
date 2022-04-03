@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        $(function () {
+            $('#submitButton').on('click', function (e) {
+                fetch(`/forgot`)
+                    .then(function (response) {
+                        return response.text();
+                        1
+                    }).then(function (text) {
+                    console.log('response text:');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<hr>
+<div class="content" align="center">
+  <h1> Reset Your Password Now !!</h1>
+  <form method="post">
+    <p>
+      <b><label> Enter Your Email Address :
+        <input type="text" name="email" placeholder="Email Address"/>
+      </label>
+    </p>
+    <p>
+    <h3>Secret Question 1</h3>
+    <b><label> What is your favourite sport :
+      <input type="text" name="sq1" placeholder=" Answer Secret Question 1"/>
+    </label>
+    </p>
+
+      <p>
+      <h3>Secret Question 2</h3>
+      <b><label> What is your birth place :
+        <input type="text" name="sq2" placeholder="Answer Secret Question 2"/>
+      </label>
+        </p>
+
+        <p>
+        <h3>Secret Question 3</h3>
+        <b><label> What is your mother maiden name :
+          <input type="text" name="sq3" placeholder="Answer Secret Question 3"/>
+        </label>
+          </p>
+
+          <p>
+            <b><label> New Password
+                <input type="text" name="newpassword" placeholder="Enter New Password"/>
+                </label>
+          </p>
+
+          <p>
+            <b><label> Confirm New Password
+                <input type="text" name="confnewpassword" placeholder="Confirm New Password"/>
+                </label>
+          </p>
+
+          <button type="submit" id="submitButton">Reset Password</button>
+  </form>
+  </div>
+</body>
+</html>
