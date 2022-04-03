@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import os
 from product import product_api
 from contact import contact_api
+from backend.account import account_api
 
 
 def create_app():
@@ -17,7 +18,7 @@ def create_app():
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve(path):
-        return product_api.
+        return render_template('product.html')
 
     return app
 
@@ -26,4 +27,5 @@ if __name__ == "__main__":
     app = create_app()
     app.register_blueprint(product_api)
     app.register_blueprint(contact_api)
+    app.register_blueprint(account_api)
     app.run()
