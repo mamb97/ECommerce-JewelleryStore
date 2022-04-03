@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for
 import os
 from product import product_api
 from contact import contact_api
-from backend.account import account_api
+from account import account_api
 
 
 def create_app():
