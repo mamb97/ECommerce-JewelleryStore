@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Product</title>
+
+    <script src="../static/js/header.js" type="text/javascript" defer></script>
+
+</head>
+<body>
+<p id="header-component">Hello</p>
+<div class="display">
+    <div>
+        <table>
+            <th>
+                {{product.product_name}}
+            </th>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="product_image">{{product.product_image}}</div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="product_description"><p>{{product.product_description}}</p></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="product_price"><p>{{product.product_price}}</p></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <button id="buy_now">Buy Now</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
