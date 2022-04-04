@@ -1,5 +1,4 @@
-from flask import render_template
-from flask import Blueprint
+from flask import render_template, session, Blueprint
 from database import get_db
 from bson.objectid import ObjectId
 
@@ -10,7 +9,8 @@ product_db = get_db().products
 @product_api.route("/products")
 def product_list():
     records = [_get_reconstructed_product_dict(r) for r in product_db.find()]
-    return render_template('product.html', data=records)
+    s = session
+    return render_template('product.html', data=records, username=session.get("username"))
 
 
 def _get_reconstructed_product_dict(r):
@@ -21,7 +21,7 @@ def _get_reconstructed_product_dict(r):
 @product_api.route("/product/<product_id>")
 def product_description(product_id):
     record = _get_reconstructed_product_dict(product_db.find_one({"_id": ObjectId(product_id)}))
-    return render_template("product_detail.html", product=record)
+    return render_template("product_detail.html", product=record, username=session.get("username"))
 
 # @product_api.route("/product/purchase/<product_id>")
 # def purchase(product_id):

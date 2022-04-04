@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, redirect, url_for
+from flask import render_template, request, Blueprint, redirect, url_for, session
 
 from database import get_db
 
@@ -6,12 +6,11 @@ account_api = Blueprint('account_api', __name__)
 account_db = get_db().accounts
 
 
-@account_api.route('/signup/', methods=('GET', 'POST'))
+@account_api.route('/signup', methods=('GET', 'POST'))
 def signup():
     if request.method == 'GET':
         return render_template('signup.html')
-
-    if request.method == 'POST':
+    else:
         input_body = request.form
         firstname = input_body.get('firstname', '').strip().lower()
         lastname = input_body.get('lastname', '').strip().lower()
@@ -27,8 +26,8 @@ def signup():
         sq2 = input_body.get('sq2', '').strip().lower()
         sq3 = input_body.get('sq3', '').strip().lower()
 
-        if not (
-                firstname and lastname and email and address and city and state and country and password and confpassword and sq1 and sq2 and sq3):
+        if not (firstname and lastname and email and address and city and state and country and password and
+                confpassword and sq1 and sq2 and sq3):
             return "Mandatory fields are missing"
 
         if password != confpassword:
@@ -45,16 +44,11 @@ def signup():
         # Todo: Add zipcode
         account_db.insert_one(
             {'firstname': firstname, 'lastname': lastname, 'email': email, 'address': address, 'city': city,
-             'state': state, 'country': country,
-             'password': password, 'sq1': sq1, 'sq2': sq2, 'sq3': sq3})
-
-        return 'Executed insert account details to db - signup fields'
-
-    else:
-        return '<h1> Executed account method else statement </h1>'
+             'state': state, 'country': country, 'password': password, 'sq1': sq1, 'sq2': sq2, 'sq3': sq3})
+        return redirect(url_for('account_api.login'))
 
 
-@account_api.route('/forgot/', methods=('GET', 'POST'))
+@account_api.route('/forgot', methods=('GET', 'POST'))
 def forgot():
     if request.method == 'GET':
         return render_template('forgot.html')
@@ -91,12 +85,11 @@ def forgot():
     return "Unable to verify the request"
 
 
-@account_api.route('/login/', methods=('GET', 'POST'))
+@account_api.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'GET':
         return render_template('login.html')
-
-    if request.method == 'POST':
+    else:
         input_body = request.form
         email = input_body.get('email', '').strip().lower()
         password = input_body.get('password', '').strip()
@@ -104,17 +97,14 @@ def login():
         if not (email and password):
             return "Mandatory fields are missing"
 
-        if (account_db.find_one({'email': email}) is None):
-            return "Invalid Email"
+        user_record = account_db.find_one({'email': email})
+        if user_record is None or user_record['password'] != password:
+            return "Invalid login details"
+        session["username"] = email
+        return redirect(url_for("product_api.product_list"))
 
-        # Todo - session creation is pending
 
-        auth = account_db.find_one({'email': email})
-        if auth['email'] == email and auth['password'] == password:
-            return redirect(url_for("product_api.product_list"))
-
-        else:
-            return "Incorrect login details"
-
-    else:
-        return 'Reset password else statement executed'
+@account_api.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("product_api.product_list"))

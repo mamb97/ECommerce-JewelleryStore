@@ -1,71 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Reset Password</title>
-     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="../static/js/header.js" type="text/javascript" defer></script>
-    <script type=text/javascript>
-        $(function () {
-            $('#submitButton').on('click', function (e) {
-                fetch(`/forgot`)
-                    .then(function (response) {
-                        return response.text();
-                        1
-                    }).then(function (text) {
-                    console.log('response text:');
-                });
-            });
-        });
-    </script>
-</head>
-<body>
-<p id="header-component"></p>
-<hr>
-<div class="content" align="center">
-  <h1> Reset Your Password Now !!</h1>
-  <form method="post">
-    <p>
-      <b><label> Enter Your Email Address :
-        <input type="text" name="email" placeholder="Email Address"/>
-      </label>
-    </p>
-    <p>
-    <h3>Secret Question 1</h3>
-    <b><label> What is your favourite sport :
-      <input type="text" name="sq1" placeholder=" Answer Secret Question 1"/>
-    </label>
-    </p>
+{% extends 'base.html' %}
 
-      <p>
-      <h3>Secret Question 2</h3>
-      <b><label> What is your birth place :
-        <input type="text" name="sq2" placeholder="Answer Secret Question 2"/>
-      </label>
+{% block content %}
+
+<div class="content">
+    <h1> Reset Password</h1>
+    <form method="post">
+        <p>
+            <label> Enter Your Email Address :
+                <input type="text" name="email" placeholder="Email Address"/>
+            </label>
+        </p>
+        <p>
+        <h3>Secret Question 1</h3>
+        <label> What is your favourite sport :
+            <input type="text" name="sq1" placeholder=" Answer Secret Question 1"/>
+        </label>
+        </p>
+
+        <p>
+        <h3>Secret Question 2</h3>
+        <label> What is your birth place :
+            <input type="text" name="sq2" placeholder="Answer Secret Question 2"/>
+        </label>
         </p>
 
         <p>
         <h3>Secret Question 3</h3>
-        <b><label> What is your mother maiden name :
-          <input type="text" name="sq3" placeholder="Answer Secret Question 3"/>
+        <label> What is your mother maiden name :
+            <input type="text" name="sq3" placeholder="Answer Secret Question 3"/>
         </label>
-          </p>
+        </p>
 
-          <p>
-            <b><label> New Password
+        <p>
+            <label> New Password
                 <input type="password" name="newpassword" placeholder="Enter New Password"/>
-                </label>
-          </p>
+            </label>
+        </p>
 
-          <p>
-            <b><label> Confirm New Password
+        <p>
+            <label> Confirm New Password
                 <input type="password" name="confnewpassword" placeholder="Confirm New Password"/>
-                </label>
-          </p>
+            </label>
+        </p>
 
-          <button type="submit" id="submitButton">Reset Password</button>
-  </form>
-  </div>
-</body>
-</html>
+        <button type="submit" id="submitButton">Reset Password</button>
+    </form>
+</div>
+{% endblock %}

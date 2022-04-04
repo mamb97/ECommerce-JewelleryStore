@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Signup Now !!</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="../static/js/header.js" type="text/javascript" defer></script>
+{% extends 'base.html' %}
+{% block html_head %}
     <script type=text/javascript>
         $(function () {
             $('#submitButton').on('click', function (e) {
@@ -18,40 +12,39 @@
             });
         });
     </script>
-</head>
-<body>
-<p id="header-component"></p>
-<hr>
+{% endblock %}
+
+{% block content %}
     <div class="content" align="center">
         <h1> Signup Now !!</h1>
     <form method="post">
         <p>
-            <b><label> First Name :
+            <label> First Name :
                 <input type="text" name="firstname" placeholder="First Name"/>
             </label>
         </p>
         <p>
-            <b><label> Last Name :
+            <label> Last Name :
                 <input type="text" name="lastname" placeholder="Last Name"/>
                 </label>
         </p>
         <p>
-            <b><label> Email :
+            <label> Email :
                 <input type="text" name="email" placeholder="E-mail"/>
                 </label>
         </p>
         <p>
-            <b><label> Address :
+            <label> Address :
                 <input type="text" name="address" placeholder="Address" maxlength="50"/>
                 </label>
         </p>
         <p>
-            <b><label> City :
+            <label> City :
                 <input type="text" name="city" placeholder="City" maxlength="50"/>
                 </label>
         </p>
         <p>
-            <b><label>State :</label>
+            <label>State :</label>
                 <select name="state" >
 					<option value=" ">State</option>
                     <optgroup>
@@ -116,7 +109,7 @@
 
         <br>
         <p>
-            <b><label>Country :</label>
+            <label>Country :</label>
             <input value="USA" name="country" placeholder="Country" readonly/>
         </p>
 <!--        <p>-->
@@ -126,7 +119,7 @@
 <!--        </p>-->
         <br>
         <p>
-            <b><label>Password :
+            <label>Password :
                 <input type="password" name="password" placeholder="Password"/>
                 </label>
         </p>
@@ -138,21 +131,21 @@
 
         <p>
         <h3>Secret Question 1</h3>
-            <b><label> What is your favourite sport :
+            <label> What is your favourite sport :
                 <input type="text" name="sq1" placeholder="Secret Question 1"/>
                 </label>
         </p>
 
         <p>
             <h3>Secret Question 2</h3>
-            <b><label> What is your birth place :
+            <label> What is your birth place :
                 <input type="text" name="sq2" placeholder="Secret Question 2"/>
                 </label>
         </p>
 
         <p>
             <h3>Secret Question 3</h3>
-            <b><label> What is your mother maiden name :
+            <label> What is your mother maiden name :
                 <input type="text" name="sq3" placeholder="Secret Question 3"/>
                 </label>
         </p>
@@ -161,5 +154,4 @@
             <hr>
 
     </div>
-</body>
-</html>
+{% endblock %}

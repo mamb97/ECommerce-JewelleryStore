@@ -14,6 +14,7 @@ def create_app():
     app = Flask(__name__, static_folder=STATIC_FOLDER,
                 template_folder=TEMPLATE_FOLDER,
                 )
+    app.secret_key = "jewelry_store"
 
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')

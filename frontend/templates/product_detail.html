@@ -1,10 +1,7 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>Product</title>
 
-    <script src="../static/js/header.js" type="text/javascript" defer></script>
-    <script>
+{% extends 'base.html' %}
+{% block html_head %}
+ <script>
         async function buynow() {
             const confirmationtext = this.document.getElementById("confirmationText")
             const buynow_button = this.document.getElementById("buy_now")
@@ -17,9 +14,10 @@
             window.location.href = "../product.html"
         }
     </script>
-</head>
-<body>
-<p id="header-component">Hello</p>
+{% endblock %}
+
+{% block content %}
+
 <div class="display">
     <div>
         <table>
@@ -64,5 +62,5 @@
         </table>
     </div>
 </div>
-</body>
-</html>
+
+{% endblock %}
