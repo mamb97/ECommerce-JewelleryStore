@@ -1,19 +1,18 @@
-
 {% extends 'base.html' %}
 {% block html_head %}
- <script>
-        async function buynow() {
-            const confirmationtext = this.document.getElementById("confirmationText")
-            const buynow_button = this.document.getElementById("buy_now")
-            const product_id = this.document.getElementById("product_id").innerText
-            buynow_button.disabled = true;
-            // fetch(`/product/purchase/${product_id}`)
-            confirmationtext.innerHTML = '<p style="color: blue">Order has been placed successfully! Continue shopping...</p>'
-            const sleep = ms => new Promise(r => setTimeout(r, ms));
-            await sleep(1000)
-            window.location.href = "../product.html"
-        }
-    </script>
+<script>
+    function buynow() {
+        const confirmationtext = this.document.getElementById("confirmationText")
+        const buynow_button = this.document.getElementById("buy_now_loggedin")
+        const product_id = this.document.getElementById("product_id").innerText
+        buynow_button.disabled = true;
+        confirmationtext.innerHTML = '<p style="color: blue">Order has been placed successfully! Continue shopping...</p>'
+            setTimeout(() => {
+                window.location.href = "../product.html"
+            }, 2000);
+        const result = fetch(`/product/purchase/${product_id}`);
+    }
+</script>
 {% endblock %}
 
 {% block content %}
@@ -50,8 +49,20 @@
                         <tr>
                             <td>
                                 <div>
-                                    <button id="buy_now"
-                                            onclick=buynow()>Buy Now</button>
+                                    {% if username %}
+                                        <button id="buy_now_loggedin"
+                                                onclick=buynow()>Buy Now
+                                        </button>
+
+                                    {% else %}
+                                        <button id="buy_now_loggedout" type="button"
+                                           onclick="window.location.href='{{ url_for('account_api.login')}}';"
+                                               >
+                                            Buy Now
+                                        </button>
+
+                                    {% endif %}
+
                                     <p id="confirmationText"></p>
                                 </div>
                             </td>

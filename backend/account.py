@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, redirect, url_for, session
-
+from datetime import datetime
 from database import get_db
 
 account_api = Blueprint('account_api', __name__)
@@ -44,7 +44,8 @@ def signup():
         # Todo: Add zipcode
         account_db.insert_one(
             {'firstname': firstname, 'lastname': lastname, 'email': email, 'address': address, 'city': city,
-             'state': state, 'country': country, 'password': password, 'sq1': sq1, 'sq2': sq2, 'sq3': sq3})
+             'state': state, 'country': country, 'password': password, 'sq1': sq1, 'sq2': sq2, 'sq3': sq3,
+             'orders': []})
         return redirect(url_for('account_api.login'))
 
 
@@ -104,3 +105,20 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("product_api.product_list"))
+
+
+@account_api.route("/orders")
+def orders():
+    if "username" not in session:
+        return []
+    user_record = account_db.find_one({'email': session["username"]})
+    order_records = user_record.get('orders', [])
+    for idx in range(len(order_records)):
+        record = order_records[idx]
+        record['full_address'] = ",".join([record["address"]["address_line_1"], record["address"]["city"],
+                                           record["address"]["state"], record["address"]["country"]]).strip()
+        record["current_status"] = record["status"][-1][1].title()
+        record["order_placement_date"] = datetime.strptime(record["order_id"],
+                                                           "%Y%m%d%H%M%S%f").strftime("%m/%d/%Y %H:%M:%S")
+        order_records[idx] = record
+    return render_template("order.html", orders=order_records, username=session["username"])

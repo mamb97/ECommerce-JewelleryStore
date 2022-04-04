@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h>Your Orders</h>
+<table style="width:100%;border-spacing: 5px;">
+{% for order in orders %}
+    <tr>
+        <td><img src="{{order.product.product_image}}" width="200" height="200"/></td>
+        <td>Product Name: {{order.product.product_name}}</td>
+        <td>Order ID: {{order.order_id}}</td>
+        <td>Order Placement Date: {{order.order_placement_date}}</td>
+        <td>Current Order Status: {{order.current_status}}</td>
+        <td>Delivery Address: {{order.full_address}}</td>
+    </tr>
+{%endfor%}
+</table>
+{% endblock %}
