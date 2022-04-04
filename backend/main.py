@@ -29,4 +29,4 @@ if __name__ == "__main__":
     app.register_blueprint(product_api)
     app.register_blueprint(contact_api)
     app.register_blueprint(account_api)
-    app.run()
+    app.run(host='0.0.0.0', port="5000")
