@@ -30,11 +30,11 @@ def signup():
                 confpassword and sq1 and sq2 and sq3):
             return "Mandatory fields are missing"
 
+        if len(password) < 6:
+            return "Password should be at least 6 characters"
+
         if password != confpassword:
             return "Password and Confirm Password doesn't match"
-
-        if not (len(password) > 5):
-            return "Password should be at least 6 characters"
 
         if not (account_db.find_one({'email': email}) is None):
             return "You cannot register with the provided email"
@@ -52,8 +52,7 @@ def signup():
 def forgot():
     if request.method == 'GET':
         return render_template('forgot.html')
-
-    if request.method == 'POST':
+    else:
         input_body = request.form
         email = input_body.get('email', '').strip().lower()
         newpassword = input_body.get('newpassword', '').strip()
@@ -62,25 +61,22 @@ def forgot():
         sq2 = input_body.get('sq2', '').strip().lower()
         sq3 = input_body.get('sq3', '').strip().lower()
 
-        if not (input_body.get('email', '') and input_body.get('newpassword', '') and input_body.get('confnewpassword',
-                                                                                                     '') and input_body.get(
-            'sq1', '') and input_body.get('sq2', '') and input_body.get('sq3', '')):
+        if not (input_body.get('email', '') and input_body.get('newpassword', '') and
+                input_body.get('confnewpassword', '') and input_body.get('sq1', '') and input_body.get('sq2', '') and
+                input_body.get('sq3', '')):
             return "Mandatory fields are missing"
 
-        if (account_db.find_one({'email': email}) is None):
-            return "Invalid Email"
+        if len(newpassword) < 6:
+            return "Password should be at least 6 characters"
 
         if newpassword != confnewpassword:
             return "Password and Confirm Password fields doesn't match"
 
-        if not (len(newpassword) > 5):
-            return "Password should be atleast 6 characters"
+        user_record = account_db.find_one({'email': email})
 
-        sq = account_db.find_one({'email': email})
-
-        if sq['sq1'] == sq1 and sq['sq2'] == sq2 and sq['sq3'] == sq3:
+        if user_record and user_record['sq1'] == sq1 and user_record['sq2'] == sq2 and user_record['sq3'] == sq3:
             account_db.update_one({'email': email}, {"$set": {'password': newpassword}})
-            return "Password updated succesfully"
+            return redirect(url_for('account_api.login'))
 
     return "Unable to verify the request"
 
