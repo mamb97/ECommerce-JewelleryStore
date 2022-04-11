@@ -8,18 +8,31 @@ product_db = get_db().products
 account_db = get_db().accounts
 
 
+@product_api.route("/products/<category>")
 @product_api.route("/products")
-def product_list():
-    records = [_get_reconstructed_product_dict(r) for r in product_db.find()]
-    return render_template('product.html', data=records, username=session.get("username"))
+def product_list(category=None):
+    default_category = 'ALL'
+    categories = [default_category]
+    categories += product_db.distinct("category_name")
+    if category and category != default_category:
+        product_records = product_db.find({'category_name': category})
+    else:
+        product_records = product_db.find()
+    records = []
+    for product in product_records:
+        records.append(_get_reconstructed_product_dict(product))
+    return render_template('product.html', data=records, username=session.get("username"), categories=categories,
+                           selected_category=category or default_category)
 
 
 def _get_reconstructed_product_dict(r):
     return {"product_name": r["name"], "product_price": r["price"], "product_image": "/static/img/" + r['img'],
             "product_id": str(r["_id"]), "product_description": r["desc"], "product_description_url": r["_id"]}
 
+
 def generate_unique_receipt_id():
     return datetime.today().strftime("%Y%m%d%H%M%S%f")
+
 
 @product_api.route("/product/<product_id>")
 def product_description(product_id):

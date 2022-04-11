@@ -2,6 +2,21 @@
 
 {% block content %}
     <div>
+        <div class='card-group justify-content-center '>
+            {% for category in categories %}
+            <div class="flex-grow-0" >
+                <div class="card-body" >
+                    {% if selected_category==category %}
+                        <a style="font-weight: bold; font-size: 2em;
+                        text-decoration: none; color: darkgoldenrod" href="/products/{{category}}"><i>{{category}}</i></a>
+                    {% else %}
+                        <a style="font-weight: lighter; font-size: 2em;
+                        text-decoration: none;color: purple" href="/products/{{category}}"><i>{{category}}</i></a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
         <div class='card-group'>
             {% for product in data %}
             <div class="flex-grow-0">
