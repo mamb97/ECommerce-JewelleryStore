@@ -133,7 +133,7 @@ def account():
 
     if request.method == 'GET':
         # user_record = account_db.find_one({'email': session["username"]})
-        return render_template('account.html', record=user_record)
+        return render_template('account.html', record=user_record, username=session["username"])
 
     # else:
     #     input_body = request.form
